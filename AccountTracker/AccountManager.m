@@ -11,6 +11,13 @@
 static double kStartingBalance = 5000;
 static double kStartingTransactions = 0;
 
+/*
+ Allows refactoring
+ - just one change in our code if we want to change the name
+ - avoid typos
+ */
+static NSString *kCurrentBalanceKeyPath = @"CurrentBalance";
+
 @implementation AccountManager
 
 @synthesize currentBalance;
@@ -35,7 +42,7 @@ static double kStartingTransactions = 0;
     double currentAmount = [currentBalance doubleValue];
     
     currentAmount += submittedAmount;
-    
+      
     currentBalance = [NSNumber numberWithDouble:currentAmount];
     NSLog(@"currentBalance: %@", currentBalance);
 }
