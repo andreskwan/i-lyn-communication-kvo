@@ -42,8 +42,13 @@ static NSString *kCurrentBalanceKeyPath = @"CurrentBalance";
     double currentAmount = [currentBalance doubleValue];
     
     currentAmount += submittedAmount;
-      
-    currentBalance = [NSNumber numberWithDouble:currentAmount];
+    
+    //UI should be informed that this change took place.
+    //So we need to use KVO
+    //we must change the implementation
+    //    currentBalance = [NSNumber numberWithDouble:currentAmount];
+    // this also fire off the notification to all observers
+    [self setValue:[NSNumber numberWithDouble:currentAmount] forKey:kCurrentBalanceKeyPath];
     NSLog(@"currentBalance: %@", currentBalance);
 }
 
