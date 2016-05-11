@@ -11,6 +11,8 @@
 
 #define kCurrentBalancePrefix @"Current Balance: "
 
+static NSString *kCurrentBalanceKeyPath = @"currentBalance";
+
 @interface ViewController () <UITableViewDelegate, UITableViewDataSource>
 {
     __weak IBOutlet UITextField *amountInputTF;
@@ -41,6 +43,15 @@
     currentBalanceLbl.text = [self currentBalanceString];
     
     dateLbl.text = [NSString stringWithFormat:@"As of %@ \t\t %@", [self getCurrentDate], [self getTransactionCount]];
+    
+    /*
+     Add this object as observer to the account manager object
+     */
+    [account addObserver:self
+              forKeyPath:kCurrentBalanceKeyPath
+                 options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld
+                 context:nil];
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -64,6 +75,9 @@
     return currentDate;
 }
 
+/*
+ Helper method to convert from number to string
+ */
 - (NSString *)currentBalanceString
 {
     NSString *string = [NSString stringWithFormat:@"%@ %@", kCurrentBalancePrefix, [self formatNumber:account.currentBalance]];
@@ -124,6 +138,35 @@
 }
 
 
+/*
+ this method is called when a change in the observed parameter occurs
+ */
+- (void)observeValueForKeyPath:(NSString *)keyPath
+                      ofObject:(id)object
+                        change:(NSDictionary *)change
+                       context:(void *)context
+{
+//    if (context == <#context#>) {
+//        <#code to be executed upon observing keypath#>
+//    } else {
+//        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+//    }
+    if ([keyPath isEqualToString:kCurrentBalanceKeyPath]) {
+        //Update current balance label text color
+        //red or black
+        double balance = [account.currentBalance doubleValue];
+        if (balance < 0) {
+            //Turn red
+            currentBalanceLbl.textColor = [UIColor redColor];
+        } else {
+            //Keep black
+            currentBalanceLbl.textColor = [UIColor blackColor];
+        }
+        //Update current balance text value
+        currentBalanceLbl.text = [self currentBalanceString];
+        
+    }
+}
 
 
 @end
