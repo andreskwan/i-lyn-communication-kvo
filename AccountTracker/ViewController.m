@@ -12,6 +12,7 @@
 #define kCurrentBalancePrefix @"Current Balance: "
 
 static NSString *kCurrentBalanceKeyPath = @"currentBalance";
+static NSString *kCurrentNumOfTransactionsKeyPath = @"numOfTransactions";
 
 @interface ViewController () <UITableViewDelegate, UITableViewDataSource>
 {
@@ -42,7 +43,7 @@ static NSString *kCurrentBalanceKeyPath = @"currentBalance";
     account = [[AccountManager alloc] init];
     currentBalanceLbl.text = [self currentBalanceString];
     
-    dateLbl.text = [NSString stringWithFormat:@"As of %@ \t\t %@", [self getCurrentDate], [self getTransactionCount]];
+    dateLbl.text = [self updateDateAndTransactionCountLabel];
     
     /*
      Add this object as observer to the account manager object
@@ -51,7 +52,10 @@ static NSString *kCurrentBalanceKeyPath = @"currentBalance";
               forKeyPath:kCurrentBalanceKeyPath
                  options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld
                  context:nil];
-    
+    [account addObserver:self
+              forKeyPath:kCurrentNumOfTransactionsKeyPath
+                 options:NSKeyValueObservingOptionNew
+                 context:nil];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -146,11 +150,6 @@ static NSString *kCurrentBalanceKeyPath = @"currentBalance";
                         change:(NSDictionary *)change
                        context:(void *)context
 {
-//    if (context == <#context#>) {
-//        <#code to be executed upon observing keypath#>
-//    } else {
-//        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
-//    }
     if ([keyPath isEqualToString:kCurrentBalanceKeyPath]) {
         //Update current balance label text color
         //red or black
@@ -166,7 +165,18 @@ static NSString *kCurrentBalanceKeyPath = @"currentBalance";
         currentBalanceLbl.text = [self currentBalanceString];
         
     }
+    if ([keyPath isEqualToString:kCurrentNumOfTransactionsKeyPath]) {
+        
+        dateLbl.text = [self updateDateAndTransactionCountLabel];
+    }
 }
 
+/*
+ Helper method created to avoid code repetition
+ */
+- (NSString *)updateDateAndTransactionCountLabel
+{
+    return [NSString stringWithFormat:@"As of %@ \t\t %@", [self getCurrentDate], [self getTransactionCount]];
+}
 
 @end

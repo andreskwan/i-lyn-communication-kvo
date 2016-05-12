@@ -16,7 +16,8 @@ static double kStartingTransactions = 0;
  - just one change in our code if we want to change the name
  - avoid typos
  */
-static NSString *kCurrentBalanceKeyPath = @"CurrentBalance";
+static NSString *kCurrentBalanceKeyPath = @"currentBalance";
+static NSString *kCurrentNumOfTransactionsKeyPath = @"numOfTransactions";
 
 @implementation AccountManager
 
@@ -49,6 +50,11 @@ static NSString *kCurrentBalanceKeyPath = @"CurrentBalance";
     //    currentBalance = [NSNumber numberWithDouble:currentAmount];
     // this also fire off the notification to all observers
     [self setValue:[NSNumber numberWithDouble:currentAmount] forKey:kCurrentBalanceKeyPath];
+    /*
+     This is not working as expected when the same amount of money is discounted 
+     two transactions take place!!!
+     */
+    [self incrementTransactionCount];
     NSLog(@"currentBalance: %@", currentBalance);
 }
 
@@ -56,7 +62,8 @@ static NSString *kCurrentBalanceKeyPath = @"CurrentBalance";
 {
     double transactionCount = [numOfTransactions doubleValue];
     transactionCount++;
-    numOfTransactions = [NSNumber numberWithDouble:transactionCount];
+//    numOfTransactions = [NSNumber numberWithDouble:transactionCount];
+    [self setValue:[NSNumber numberWithDouble:transactionCount] forKey:kCurrentNumOfTransactionsKeyPath];
 }
 
 @end
