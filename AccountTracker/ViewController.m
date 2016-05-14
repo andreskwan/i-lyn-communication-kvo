@@ -13,6 +13,7 @@
 
 static NSString *kCurrentBalanceKeyPath = @"currentBalance";
 static NSString *kCurrentNumOfTransactionsKeyPath = @"numOfTransactions";
+static NSString *kSubmitNotification = @"SubmitNotification";
 
 @interface ViewController () <UITableViewDelegate, UITableViewDataSource>
 {
