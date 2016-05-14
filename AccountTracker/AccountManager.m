@@ -50,11 +50,7 @@ static NSString *kCurrentNumOfTransactionsKeyPath = @"numOfTransactions";
     //    currentBalance = [NSNumber numberWithDouble:currentAmount];
     // this also fire off the notification to all observers
     [self setValue:[NSNumber numberWithDouble:currentAmount] forKey:kCurrentBalanceKeyPath];
-    /*
-     This is not working as expected when the same amount of money is discounted 
-     two transactions take place!!!
-     */
-    [self incrementTransactionCount];
+    
     NSLog(@"currentBalance: %@", currentBalance);
 }
 
@@ -64,6 +60,15 @@ static NSString *kCurrentNumOfTransactionsKeyPath = @"numOfTransactions";
     transactionCount++;
 //    numOfTransactions = [NSNumber numberWithDouble:transactionCount];
     [self setValue:[NSNumber numberWithDouble:transactionCount] forKey:kCurrentNumOfTransactionsKeyPath];
+}
+
+/**
+ * method to call incrementTransactionCount
+ * @param needed to access the notification info
+ */
+- (void)didReceiveSubmitNotification:(NSNotification *)notification
+{
+    [self incrementTransactionCount];
 }
 
 @end
