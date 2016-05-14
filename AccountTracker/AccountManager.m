@@ -19,6 +19,8 @@ static double kStartingTransactions = 0;
 static NSString *kCurrentBalanceKeyPath = @"currentBalance";
 static NSString *kCurrentNumOfTransactionsKeyPath = @"numOfTransactions";
 
+static NSString *kSubmitNotification = @"SubmitNotification";
+
 @implementation AccountManager
 
 @synthesize currentBalance;
@@ -30,6 +32,11 @@ static NSString *kCurrentNumOfTransactionsKeyPath = @"numOfTransactions";
         //Set initial balance
         currentBalance = [NSNumber numberWithDouble:kStartingBalance];
         numOfTransactions = [NSNumber numberWithDouble:kStartingTransactions];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(didReceiveSubmitNotification:)
+                                                     name:kSubmitNotification
+                                                   object:nil];
         
     }
     
