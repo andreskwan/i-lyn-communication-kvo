@@ -196,5 +196,13 @@ static NSString *kCurrentNumOfTransactionsKeyPath = @"numOfTransactions";
                      }];
 }
 
+/**
+ * method to call showSuccessLabel
+ * @param needed to access the notification info
+ */
+- (void)didReceiveSubmitNotification:(NSNotification *)notification
+{
+    [self showSuccessLabel];
+}
 
 @end
