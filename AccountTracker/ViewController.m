@@ -118,6 +118,11 @@ static NSString *kSubmitNotification = @"SubmitNotification";
     
     amountInputTF.text = nil;
     
+    /**
+     Post a notification after submit
+     */
+    [[NSNotificationCenter defaultCenter] postNotificationName:kSubmitNotification
+                                                        object:nil];
 }
 
 - (void)postTransaction
