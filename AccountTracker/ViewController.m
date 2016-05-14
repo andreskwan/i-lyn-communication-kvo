@@ -179,4 +179,22 @@ static NSString *kCurrentNumOfTransactionsKeyPath = @"numOfTransactions";
     return [NSString stringWithFormat:@"As of %@ \t\t %@", [self getCurrentDate], [self getTransactionCount]];
 }
 
+/**
+ * label animation
+ */
+- (void)showSuccessLabel
+{
+    //1 set text property
+    successLbl.text = @"Transaction Submitted";
+    //2 set the alpha
+    successLbl.alpha = 1.0f;
+    
+    //3 the animation for text alpha - to disappear message after a few seconds
+    [UIView animateWithDuration:2.0
+                     animations:^{
+                         successLbl.alpha = 0.0f;
+                     }];
+}
+
+
 @end
