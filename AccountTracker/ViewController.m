@@ -57,6 +57,14 @@ static NSString *kSubmitNotification = @"SubmitNotification";
               forKeyPath:kCurrentNumOfTransactionsKeyPath
                  options:NSKeyValueObservingOptionNew
                  context:nil];
+    
+    /*
+     Subscribe to notifications
+     */
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(didReceiveSubmitNotification:)
+                                                 name:kSubmitNotification
+                                               object:nil];
 }
 
 - (void)didReceiveMemoryWarning {
