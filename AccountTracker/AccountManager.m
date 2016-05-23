@@ -25,6 +25,7 @@ static NSString *kSubmitNotification = @"SubmitNotification";
 
 @synthesize currentBalance;
 @synthesize numOfTransactions;
+@synthesize delegate;
 
 - (id)init
 {
@@ -47,6 +48,7 @@ static NSString *kSubmitNotification = @"SubmitNotification";
 //Update current balance with submitted amount
 - (void)postTransaction:(double)submittedAmount
 {
+    //willFinishProcessingTransaction - should be here - it goes according to the tense
     double currentAmount = [currentBalance doubleValue];
     
     currentAmount += submittedAmount;
@@ -58,6 +60,8 @@ static NSString *kSubmitNotification = @"SubmitNotification";
     // this also fire off the notification to all observers
     [self setValue:[NSNumber numberWithDouble:currentAmount] forKey:kCurrentBalanceKeyPath];
     
+    //after setValue takes place
+    [delegate didFinishProcessingTransaction:currentAmount onDate:[NSDate date]];
     NSLog(@"currentBalance: %@", currentBalance);
 }
 
