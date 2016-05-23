@@ -8,6 +8,13 @@
 
 #import <Foundation/Foundation.h>
 
+@class AccountManager;
+@protocol AccountManagerDelegate <NSObject>
+
+- (void)didFinishProcessingTransaction:(double)transaction onDate:(NSDate *)date;
+
+@end
+
 @interface AccountManager : NSObject
 
 @property (nonatomic, strong) NSNumber *currentBalance;
