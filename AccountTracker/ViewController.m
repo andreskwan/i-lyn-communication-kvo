@@ -154,6 +154,12 @@ static NSString *kSubmitNotification = @"SubmitNotification";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"Cell"];
+    //unpack the transaction data
+    NSDictionary *transactionDictionary = transactionHistory[indexPath.row];
+    
+    cell.textLabel.text = [self formatNumber:transactionDictionary[@"transaction"]];
+    cell.detailTextLabel.text = [self formatDate:transactionDictionary[@"transactionDate"]];
+    
     return cell;
 }
 
