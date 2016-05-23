@@ -20,6 +20,8 @@
 @property (nonatomic, strong) NSNumber *currentBalance;
 @property (nonatomic, strong) NSNumber *numOfTransactions;
 
+@property (nonatomic, assign) id<AccountManagerDelegate> delegate;
+
 - (void)postTransaction:(double)submittedAmount;
 
 @end
