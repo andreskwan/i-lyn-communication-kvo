@@ -15,7 +15,7 @@ static NSString *kCurrentBalanceKeyPath = @"currentBalance";
 static NSString *kCurrentNumOfTransactionsKeyPath = @"numOfTransactions";
 static NSString *kSubmitNotification = @"SubmitNotification";
 
-@interface ViewController () <UITableViewDelegate, UITableViewDataSource>
+@interface ViewController () <UITableViewDelegate, UITableViewDataSource, AccountManagerDelegate>
 {
     __weak IBOutlet UITextField *amountInputTF;
     __weak IBOutlet UIButton *submitBtn;
@@ -42,6 +42,8 @@ static NSString *kSubmitNotification = @"SubmitNotification";
     
     //Initialize BankAccount object
     account = [[AccountManager alloc] init];
+    account.delegate = self;
+    
     currentBalanceLbl.text = [self currentBalanceString];
     
     dateLbl.text = [self updateDateAndTransactionCountLabel];
