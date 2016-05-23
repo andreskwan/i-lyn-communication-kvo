@@ -221,4 +221,29 @@ static NSString *kSubmitNotification = @"SubmitNotification";
     [self showSuccessLabel];
 }
 
+
+# pragma mark AccountManager Delegate
+/**
+ * goal is update the table view with data related with success submision 
+ * 
+ * the dataSource of the table is an mutable array that we are going to populate
+ * with nsdictionary objects 
+ * 
+ * this array is going to be upacked to present the data (extract the data and be presented)
+ */
+- (void)didFinishProcessingTransaction:(double)transaction onDate:(NSDate *)date
+{
+    //packing the data returned into a dictionary
+    NSDictionary * transactionDictionary = @{@"transaction":[NSNumber numberWithDouble:transaction],
+                                             @"transactionDate": date};
+    [transactionHistory addObject:transactionDictionary];
+    
+    NSSortDescriptor *sortDescending = [NSSortDescriptor sortDescriptorWithKey:@"transactionDate" ascending:NO];
+    
+    [transactionHistory sortUsingDescriptors:@[sortDescending]];
+    
+    //reload the tableView
+    [historyTableView reloadData];
+    
+}
 @end
